@@ -1,25 +1,20 @@
-import express from 'express';
-import connectDB from './config/dbConfig.js';
+import express, { urlencoded } from 'express';
+import connectDB from './config/dbConfig.js';   
+import apiRouter from './router/apiRouter.js'
 const PORT=8004;
 const app=express();
-app.get('/ping/:name',(req,res)=>{
-//    return res.json({message: "w her YOu"});
-    return res.send(`Hello, ${req.params.name}!`);
-});
-
-app.get('/home',(req,res)=>{
+app.use(express.text());
+app.use(express.json());
+ 
+app.use(urlencoded());
+app.use('/api', apiRouter);
+app.get('/ping',(req,res)=>{
+    console.log(req.query);
+    console.log(req.body);
     return res.json({message: 'Pong'+"Home Style"});
-});
-// app.post('/home',(req,res)=>{
-//     return res.send("Post: Home Style");
-// });
-// app.put('/home',(req,res)=>{
-//     return res.send("Put: Home Style");
-// });
-// app.delete('/home',(req,res)=>{
-//     return res.send("Delete: Home Style");
-// });
+}); 
+
 app.listen(PORT,()=>{
     console.log(`Server listening on ${PORT}`);
     connectDB();  // Connect to MongoDB
-});
+});    

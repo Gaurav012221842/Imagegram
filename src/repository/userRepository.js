@@ -1,4 +1,4 @@
-import user from "../schema/user";
+import user from "../schema/user.js";
 export const findUserByEmail= async (email)=>{
     try{
         const user=await user.findOne({email});
